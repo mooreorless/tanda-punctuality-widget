@@ -1,0 +1,42 @@
+{
+  "name": "punctionality-widget",
+  "version": "1.0.0",
+  "description": "punctionality widget tanda challenge",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mooreorless/tanda-punctionality-widget.git"
+  },
+  "author": "Elliott Moore",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mooreorless/tanda-punctionality-widget/issues"
+  },
+  "homepage": "https://github.com/mooreorless/tanda-punctionality-widget#readme",
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-es2015": "^6.24.1",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb-base": "^11.1.3",
+    "eslint-plugin-import": "^2.2.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "requirejs": "^2.3.3"
+  },
+  "dependencies": {
+    "angular": "^1.6.4",
+    "angular-animate": "^1.6.4",
+    "angular-resource": "^1.6.4",
+    "angular-ui-bootstrap": "^2.5.0",
+    "angular-ui-router": "^1.0.3",
+    "datatables.net": "^1.10.15",
+    "jquery": "^3.2.1",
+    "lodash": "^4.17.4",
+    "moment": "^2.18.1",
+    "oclazyload": "^1.1.0",
+    "requirejs": "^2.3.3"
+  }
+}

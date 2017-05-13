@@ -1,0 +1,16 @@
+{
+  "presets": [
+    [
+      "env",
+      {
+        "plugins": [
+          "es2015"
+        ],
+        "paths": {
+          "es6": "node_modules/requirejs-babel/es6",
+          "babel": "node_modules/requirejs-babel/babel-4.6.6.min"
+        },
+      }
+    ]
+  ]
+}
