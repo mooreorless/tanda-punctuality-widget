@@ -1,0 +1,17 @@
+.employee-card {
+  width: 16em;
+}
+
+.employee-card-profile {
+  width: 100%;
+  height: 50%;
+  border-radius: 50%;
+  padding: 1.5em;
+}
+
+.employee-profile-widget {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-right: 15px;
+}

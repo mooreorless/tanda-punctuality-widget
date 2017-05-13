@@ -8,7 +8,7 @@ const config = {
     js: ['./src/**/*.js', '!node_modules/**/*.js'],
     html: './src/**/*.html',
     css: './src/**/*.css',
-    assets: ['./src/assets/**/*.png', './src/assets/**/*.jpg']
+    assets: ['./src/**/*.png', './src/**/*.jpg']
   },
   dest: './'
 };
