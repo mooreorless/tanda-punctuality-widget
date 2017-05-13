@@ -6,6 +6,7 @@ define([
   .module('punctualWidget')
   .controller('EmployeeCtrl', (
     $scope,
+    $rootScope,
     Employees
   ) => {
     $scope.employee = 'Elliott Moore';
@@ -16,5 +17,8 @@ define([
       console.log(roster);
       $scope.roster = roster;
     });
+    $scope.cols = [{}];
+    $scope.tableOptions = {};
+    $scope.getTableData = (data, callback, settings) => {};
   });
 });

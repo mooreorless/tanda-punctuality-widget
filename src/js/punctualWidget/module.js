@@ -23,8 +23,8 @@ define([
       resolve: {
         deps: $ocLazyLoad => $ocLazyLoad.load([
           './js/punctualWidget/controllers/employee.ctrl.js',
-          './js/tandaSDK/models/employees.factory.js'
-          // './dist/js/tandaApp/directives/datatables.directive.js'
+          './js/tandaSDK/models/employees.factory.js',
+          './js/tandaApp/directives/dataTable.directive.js'
         ])
       }
     });
