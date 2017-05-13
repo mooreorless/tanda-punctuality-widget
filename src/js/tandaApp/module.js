@@ -15,36 +15,49 @@ define([
     'punctualWidget',
     'tandaSDK'
   ]);
-  
- tandaApp
+
+  tandaApp
   .config((
     $stateProvider,
-    $urlRouterProvider,
-    $ocLazyLoadProvider
+    $urlRouterProvider
   ) => {
     $stateProvider
     .state('app', {
       abstract: true,
-      url: '/',
       views: {
         app: {
-          templateUrl: './tandaApp/views/index.html'
-        },
+          templateUrl: './js/tandaApp/views/index.html'
+        }
+      }
+    })
+    .state('app.main', {
+      abstract: true,
+      parent: 'app',
+      controller: 'MainCtrl',
+      views: {
         'navbar@app': {
-          templateUrl: './tandaApp/templates/nav.tpl.html',
-          controller: 'navCtrl'
+          templateUrl: './js/tandaApp/templates/nav.tpl.html'
         }
       },
       resolve: {
         deps: ($ocLazyLoad) => {
           $ocLazyLoad.load([
-            './tandaApp/controllers/nav.ctrl.js'
-          ])
+            './dist/js/tandaApp/controllers/main.ctrl.js'
+          ]);
+        }
+      }
+    })
+    .state('app.main.welcome', {
+      url: '/welcome',
+      parent: 'app.main',
+      views: {
+        'content@app': {
+          templateUrl: './js/tandaApp/views/welcome/index.html'
         }
       }
     });
 
-    $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise('/welcome');
   });
 
   return tandaApp;

@@ -1,7 +1,7 @@
 require([
   'angular',
-  'tandaApp',
+  'tandaApp'
 ], (angular) => {
-    angular.module('tandaApp');
-    angular.bootstrap(document, ['tandaApp']);
+  angular.module('tandaApp');
+  angular.bootstrap(document, ['tandaApp']);
 });
