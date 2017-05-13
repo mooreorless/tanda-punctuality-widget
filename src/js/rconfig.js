@@ -1,6 +1,3 @@
-// sinatra api
-window.apiHost = 'http://localhost:4567';
-
 require.config({
   paths: {
     angular: '../node_modules/angular/angular',
@@ -21,7 +18,8 @@ require.config({
 
     // modules
     tandaSDK: './tandaSDK/module',
-    punctualWidget: './punctualWidget/module',
+    tandaApp: './tandaApp',
+    punctualWidget: './punctualWidget/module'
   },
   shim: {
     angular: {
@@ -44,4 +42,4 @@ require.config({
   }
 });
 
-require(['dist/app.js', 'bootstrap']);
+require(['dist/js/app.js', 'bootstrap']);

@@ -3,15 +3,17 @@ define([
   'angular-ui-router',
   'angular-resource',
   'oclazyload',
-  'angular-bootstrap'
+  'angular-bootstrap',
+  'punctualWidget',
+  'tandaSDK'
 ], (angular) => {
   const tandaApp = angular.module('tandaApp', [
     'ui.router',
     'ngResource',
     'oc.lazyLoad',
     'ui.bootstrap',
-    'tandaSDK',
-    'punctualWidget'
+    'punctualWidget',
+    'tandaSDK'
   ]);
   
  tandaApp
