@@ -5,7 +5,7 @@ define([
   const tandaSDK = angular.module('tandaSDK', [
     'ngResource'
   ]);
-  tandaSDK.constant('$apiEndpoint', 'localhost:4567');
+  tandaSDK.constant('$apiEndpoint', 'http://localhost:4567');
 
   return tandaSDK;
 });

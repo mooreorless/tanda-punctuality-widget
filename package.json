@@ -4,6 +4,7 @@
   "description": "punctionality widget tanda challenge",
   "main": "index.js",
   "scripts": {
+    "start": "gulp && http-server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

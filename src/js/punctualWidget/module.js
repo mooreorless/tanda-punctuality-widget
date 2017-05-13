@@ -12,8 +12,8 @@ define([
 
   module.config(($stateProvider) => {
     $stateProvider
-    .state('app.main.punctuality', {
-      url: '/employee/punctuality',
+    .state('app.main.employee', {
+      url: '/employee',
       views: {
         'content@app': {
           templateUrl: './js/punctualWidget/views/index.html',
@@ -21,9 +21,9 @@ define([
         }
       },
       resolve: {
-        deps: $oclazyLoad => $oclazyLoad.load([
-          './dist/js/punctualWidget/controllers/employee.ctrl.js',
-          './dist/js/tandaSDK/models/employees.factory.js'
+        deps: $ocLazyLoad => $ocLazyLoad.load([
+          './js/punctualWidget/controllers/employee.ctrl.js',
+          './js/tandaSDK/models/employees.factory.js'
           // './dist/js/tandaApp/directives/datatables.directive.js'
         ])
       }
