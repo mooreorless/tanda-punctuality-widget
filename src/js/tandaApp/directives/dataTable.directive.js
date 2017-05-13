@@ -2,7 +2,7 @@ define([
   'angular',
   'jquery',
   'lodash',
-  'datatables'
+  'datatables.net'
 ], (angular, $, _) => {
   angular
   .module('tandaApp')
@@ -19,7 +19,7 @@ define([
       options: '=?'
     },
     link(scope, elem) {
-      const options = {
+      let options = {
         autoWidth: false,
         ajax(data, callback, settings) {
           scope.src({
@@ -35,7 +35,8 @@ define([
           return col;
         })
       };
-
+      scope.options = scope.options || {};
+      options = _.defaults(options, scope.options);
       scope.table = $(elem).DataTable(options);
       // add hover function
 

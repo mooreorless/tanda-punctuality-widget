@@ -12,9 +12,10 @@ require.config({
     jquery: '../../node_modules/jquery/dist/jquery.min',
     lodash: '../../node_modules/lodash/lodash',
     moment: '../../node_modules/moment/moment',
-    'datatables.net': '//cdn.datatables.net/1.10.13/js/jquery.dataTables',
-    datatables: '//cdn.datatables.net/1.10.13/js/dataTables.bootstrap',
+    'datatables.net': '../../node_modules/datatables.net/js/jquery.dataTables',
+    // datatables: '//cdn.datatables.net/1.10.13/js/dataTables.bootstrap',
     oclazyload: '../../node_modules/oclazyload/dist/ocLazyLoad.require',
+
 
     // modules
     tandaSDK: './tandaSDK/module',
@@ -37,8 +38,8 @@ require.config({
     'angular-touch': ['angular'],
     'angular-animate': ['angular'],
     'angular-ui-bootstrap-tpls': ['angular-ui-bootstrap', 'angular'],
-    'datatables.net': ['jquery'],
-    datatables: ['jquery', 'datatables.net']
+    'datatables.net': ['angular', 'jquery']
+    // datatables: ['jquery', 'datatables.net']
   }
 });
 

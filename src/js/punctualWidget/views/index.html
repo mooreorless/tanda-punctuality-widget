@@ -15,13 +15,16 @@
 
           <p class="card-text">Punctuality message</p>
 
-          <tanda-table-directive data-src="" data-cols="" data-options="" data-table="">
-          </tanda-table-directive>
+          <!--<tanda-table-directive data-src="getTableData(data, settings, cb)" data-cols="cols" data-options="tableOptions" data-table="shiftsTable">
+          </tanda-table-directive>-->
         </div>
         <div class="card-footer text-muted">
           ...
         </div>
       </div>
+      <table id="employeeShiftsTable" tanda-table-directive data-src="getTableData(data, settings, cb)" data-cols="cols" data-options="tableOptions"
+        data-table="shiftsTable">
+      </table>
     </div>
   </div>
 </div>
