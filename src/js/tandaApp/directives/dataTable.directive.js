@@ -8,7 +8,7 @@ define([
   .module('tandaApp')
   .directive('tandaTableDirective', $rootScope => ({
     restrict: 'AE',
-    template: `<table class="table table-striped table-hover">
+    template: `<table class="table table-striped table-hover dt-left">
     <thead></thead></table>`,
     replace: true,
     scope: {

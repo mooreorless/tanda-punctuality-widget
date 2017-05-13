@@ -36,7 +36,8 @@ define([
           return day;
         }
       },
-      name: 'Day'
+      name: 'Day',
+      className: 'dt-body-left'
     }, {
       data: {
         _: 'start',
@@ -46,12 +47,14 @@ define([
           // this needs to be the rosters time, not shifts
         }
       },
-      name: 'Rostered Start'
+      name: 'Rostered Start',
+      className: 'dt-body-left'
     }, {
       data: {
         _: ''
       },
       name: 'Actual Start',
+      className: 'dt-body-left',
       defaultContent: 'on time'
     }, {
       data: {
@@ -65,23 +68,31 @@ define([
         }
       },
       name: 'Rostered Finish',
+      className: 'dt-body-left',
       defaultContent: '-'
     }, {
       data: '',
       name: 'Actual Finish',
+      className: 'dt-body-left',
       defaultContent: 'time diff msg'
     }];
     $scope.tableOptions = {
       pageLength: 25,
-      order: [[0, 'desc']]
+      order: [[0, 'desc']],
+      searching: false,
+      pagingType: 'simple'
     };
     $scope.getTableData = (data, settings, cb) => Employees.getAllShifts({
       from: new moment('2013-09-15'),
       to: new moment()
     }).$promise
       .then((shifts) => {
+        const arr = [];
+        for (let i = 0; i < 5; ++i) {
+          arr.push(shifts[i]);
+        }
         console.log('shifts', shifts);
-        cb({ data: shifts });
+        cb({ data: arr });
       });
 
     Employees.getAllRosters({

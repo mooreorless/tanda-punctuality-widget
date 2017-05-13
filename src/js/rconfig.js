@@ -13,7 +13,6 @@ require.config({
     lodash: '../../node_modules/lodash/lodash',
     moment: '../../node_modules/moment/moment',
     'datatables.net': '../../node_modules/datatables.net/js/jquery.dataTables',
-    // datatables: '//cdn.datatables.net/1.10.13/js/dataTables.bootstrap',
     oclazyload: '../../node_modules/oclazyload/dist/ocLazyLoad.require',
 
 
@@ -39,7 +38,6 @@ require.config({
     'angular-animate': ['angular'],
     'angular-ui-bootstrap-tpls': ['angular-ui-bootstrap', 'angular'],
     'datatables.net': ['angular', 'jquery']
-    // datatables: ['jquery', 'datatables.net']
   }
 });
 
