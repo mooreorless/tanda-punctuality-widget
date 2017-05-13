@@ -3,7 +3,7 @@ define([
   'angular-ui-router',
   'angular-resource',
   'oclazyload',
-  'angular-bootstrap',
+  'angular-ui-bootstrap',
   'punctualWidget',
   'tandaSDK'
 ], (angular) => {
@@ -32,24 +32,20 @@ define([
     })
     .state('app.main', {
       abstract: true,
-      parent: 'app',
-      controller: 'MainCtrl',
       views: {
         'navbar@app': {
-          templateUrl: './js/tandaApp/templates/nav.tpl.html'
+          templateUrl: './js/tandaApp/templates/nav.tpl.html',
+          controller: 'MainCtrl'
         }
       },
       resolve: {
-        deps: ($ocLazyLoad) => {
-          $ocLazyLoad.load([
-            './dist/js/tandaApp/controllers/main.ctrl.js'
-          ]);
-        }
+        deps: $ocLazyLoad => $ocLazyLoad.load([
+          './js/tandaApp/controllers/main.ctrl.js'
+        ])
       }
     })
     .state('app.main.welcome', {
       url: '/welcome',
-      parent: 'app.main',
       views: {
         'content@app': {
           templateUrl: './js/tandaApp/views/welcome/index.html'

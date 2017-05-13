@@ -18,7 +18,7 @@ require.config({
 
     // modules
     tandaSDK: './tandaSDK/module',
-    tandaApp: './tandaApp',
+    tandaApp: './tandaApp/module',
     punctualWidget: './punctualWidget/module'
   },
   shim: {
@@ -42,4 +42,4 @@ require.config({
   }
 });
 
-require(['dist/js/app.js', 'bootstrap']);
+require(['js/app.js']);
