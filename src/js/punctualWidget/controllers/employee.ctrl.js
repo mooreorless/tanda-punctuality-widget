@@ -17,6 +17,12 @@ define([
     $scope.rosters = [];
     $scope.shifts = [];
     $scope.today = new moment().format('MMM Do YYYY hh:mm:ss a');
+
+    $scope.punctualStats = {
+      late: 0,
+      onTime: 0,
+      leftEarly: 0
+    };
     /**
      * create hashmap with actual times, and rostered times!! use that for the cols;
      * then create a difference between times for the actual vs rostered columns.
@@ -102,8 +108,10 @@ define([
           const rosteredStart = moment(row.rosteredStart);
 
           if (actualStart.isSameOrBefore(rosteredStart)) {
+            $scope.punctualStats.onTime++;
             return actualStart.format('hh:mm a');
           }
+          $scope.punctualStats.late++;
           return 'started late';
         }
       },
@@ -129,16 +137,18 @@ define([
       render(data, type, row) {
         const actualFinish = moment(row.actualFinish);
         const rosteredFinish = moment(row.rosteredFinish);
-        // if (row.actualFinish === null) {
-        //   return 'no finish time clocked';
-        // }
-        if (actualFinish.isAfter(rosteredFinish)) {
+        if (row.actualFinish !== null) {
           const time = actualFinish.format('hh:mm a');
-          const timeDiff = `${actualFinish.diff(rosteredFinish, 'minutes')} minutes`;
-          const html = `left early <a data-toggle="tooltip" title="${time}"><span id="status" class="badge badge-pill badge-danger">${timeDiff}</span></a>`;
+          let html = `<a data-toggle="tooltip" title="${time}">on time</a>`;
+
+          if (actualFinish.isBefore(rosteredFinish)) {
+            const timeDiff = `${actualFinish.diff(rosteredFinish, 'minutes')} minutes`;
+            html = `left early <a data-toggle="tooltip" title="${time}"><span id="status" class="badge badge-pill badge-danger">${timeDiff}</span></a>`;
+
+            return html;
+          }
           return html;
         }
-        return 'on time';
       },
       name: 'Actual Finish',
       className: 'dt-body-left time-comment',
