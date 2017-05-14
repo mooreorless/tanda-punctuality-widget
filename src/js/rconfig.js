@@ -15,6 +15,7 @@ require.config({
     moment: '../../node_modules/moment/moment',
     'datatables.net': '../../node_modules/datatables.net/js/jquery.dataTables',
     oclazyload: '../../node_modules/oclazyload/dist/ocLazyLoad.require',
+    chart: '../../node_modules/chart.js/dist/Chart',
 
 
     // modules
@@ -41,7 +42,8 @@ require.config({
     'angular-touch': ['angular'],
     'angular-animate': ['angular'],
     'datatables.net': ['angular', 'jquery'],
-    'bootstrap-daterangepicker': ['angular', 'jquery', 'moment']
+    'bootstrap-daterangepicker': ['angular', 'jquery', 'moment'],
+    chart: ['moment']
   }
 });
 
