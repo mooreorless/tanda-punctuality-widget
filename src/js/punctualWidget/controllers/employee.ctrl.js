@@ -104,6 +104,9 @@ define([
       data: {
         _: 'actualStart',
         display(row) {
+          if (!row.actualStart || !row.actualFinish) {
+            return;
+          }
           const actualStart = moment(row.actualStart);
           const rosteredStart = moment(row.rosteredStart);
 
@@ -116,7 +119,8 @@ define([
         }
       },
       name: 'Actual Start',
-      className: 'dt-body-left'
+      className: 'dt-body-left',
+      defaultContent: 'no shift logged'
     }, {
       data: {
         _: 'rosteredFinish',
@@ -145,8 +149,10 @@ define([
             const timeDiff = `${actualFinish.diff(rosteredFinish, 'minutes')} minutes`;
             html = `left early <a data-toggle="tooltip" title="${time}"><span id="status" class="badge badge-pill badge-danger">${timeDiff}</span></a>`;
 
+            $scope.punctualStats.leftEarly++;
             return html;
           }
+
           return html;
         }
       },
@@ -154,5 +160,12 @@ define([
       className: 'dt-body-left time-comment',
       defaultContent: 'no finish time clocked'
     }];
+
+    $scope.tableOptions = {
+      pageLength: 25,
+      pagingType: 'simple',
+      searching: false,
+      order: [['0', 'desc']]
+    };
   });
 });

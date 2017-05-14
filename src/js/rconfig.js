@@ -9,6 +9,7 @@ require.config({
     'angular-animate': '../../node_modules/angular-animate/angular-animate',
     'angular-touch': '../../node_modules/angular-touch/angular-touch',
 
+    bootstrap: '../../node_modules/bootstrap-sass/assets/javascripts/bootstrap',
     jquery: '../../node_modules/jquery/dist/jquery.min',
     lodash: '../../node_modules/lodash/lodash',
     moment: '../../node_modules/moment/moment',
@@ -26,6 +27,9 @@ require.config({
       exports: 'angular',
       deps: ['jquery']
     },
+    bootstrap: {
+      deps: ['jquery']
+    },
     jquery: {
       exports: '$'
     },
@@ -41,4 +45,4 @@ require.config({
   }
 });
 
-require(['js/app.js']);
+require(['js/app.js', 'bootstrap']);
