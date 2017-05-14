@@ -54,3 +54,10 @@ tr >
   color: black;
   float: right;
 }
+.punctual-msg {
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
+  padding: .2em;
+  margin-bottom: 1.2em;
+}

@@ -18,7 +18,6 @@ define([
     $scope.employee = thisEmployee;
     $scope.today = new moment().format('MMM Do YYYY hh:mm:ss a');
     $scope.notFound = false;
-    $scope.searching = false;
 
     $scope.punctualStats = {
       late: 0,
