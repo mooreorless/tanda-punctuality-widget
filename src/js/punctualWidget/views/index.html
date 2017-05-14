@@ -4,7 +4,7 @@
       <div class="card card-outline-secondary mb-3">
         <div class="card-header">
           <div class="employee-name pull-left">
-            <img class="employee-profile-widget" src="assets/mike.jpg" alt="Mike"> {{employee}}
+            <img class="employee-profile-widget" src="assets/mike.jpg" alt="Mike"> {{employee.name}}
           </div>
           <div class="pay-period pull-right">
             <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> This Pay Period
@@ -15,7 +15,9 @@
 
           <p class="card-text">Punctuality message</p>
 
-          <table id="employeeShiftsTable" tanda-table-directive data-src="getTableData(data, settings, cb)" data-cols="cols" data-options="tableOptions"
+          <button ng-click="dateSelected('2013-09-15', '2013-09-20')">Get data!</button>
+
+          <table id="employeeShiftsTable" tanda-table-directive data-src="getTableData(data, settings, cb)" data-cols="testCols" data-options="tableOptions"
             data-table="shiftsTable">
           </table>
         </div>
@@ -23,9 +25,16 @@
           ...
         </div>
       </div>
-      <!--<table id="employeeShiftsTable" tanda-table-directive data-src="getTableData(data, settings, cb)" data-cols="cols" data-options="tableOptions"
-        data-table="shiftsTable">
-      </table>-->
+      <div class="row">
+        <div class="col-md-6">
+          Rosters:
+          <!--<pre>{{rosters|json}}</pre>-->
+        </div>
+        <div class="col-md-6">
+          Shifts:
+          <!--<pre>{{shifts|json}}</pre>-->
+        </div>
+      </div>
     </div>
   </div>
 </div>

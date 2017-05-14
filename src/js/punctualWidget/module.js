@@ -13,7 +13,7 @@ define([
   module.config(($stateProvider) => {
     $stateProvider
     .state('app.main.employee', {
-      url: '/employee',
+      url: '/employee/:id',
       views: {
         'content@app': {
           templateUrl: './js/punctualWidget/views/index.html',
@@ -25,7 +25,12 @@ define([
           './js/punctualWidget/controllers/employee.ctrl.js',
           './js/tandaSDK/models/employees.factory.js',
           './js/tandaApp/directives/dataTable.directive.js'
-        ])
+        ]),
+        thisEmployee($stateParams) {
+          return {
+            name: 'Mike'
+          };
+        }
       }
     });
   });

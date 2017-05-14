@@ -29,6 +29,7 @@ define([
       getShift: {
         url: `${$apiEndpoint}/shift/:date`,
         method: 'GET',
+        isArray: true,
         params: {
           date: '@date'
         }
