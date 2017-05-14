@@ -1,8 +1,9 @@
 define([
   'angular',
   'lodash',
+  'jquery',
   'moment'
-], (angular, _, moment) => {
+], (angular, _, $, moment) => {
   angular
   .module('punctualWidget')
   .controller('EmployeeCtrl', (
@@ -42,30 +43,6 @@ define([
       $scope.shifts = shifts;
     });
 
-    // $scope.dateSelected = (from, to) => {
-    //   const proms = {
-    //     roster: Employees.getAllRosters({ from: new moment(from), to: new moment(to) }).$promise,
-    //     shift: Employees.getAllShifts({ from: new moment(from), to: new moment(to) }).$promise
-    //   };
-    //   $q.all(proms)
-    //   .then((data) => {
-    //     const roster = data.roster[0];
-    //     const shift = data.shift[0];
-
-    //     const shiftData = {
-    //       date: roster.date,
-    //       rosteredStart: roster.start,
-    //       rosteredFinish: roster.finish,
-    //       actualStart: shift.start,
-    //       actualFinish: shift.finish
-    //     };
-    //     console.log('shift', shiftData);
-    //     $scope.getTableData = (shiftData, settings, cb) => {
-    //       cb({ data: shiftData });
-    //     };
-    //   });
-    // };
-
     $scope.getTableData = (data, settings, cb) => {
       $scope.dateSelected = (from, to) => {
         const proms = {
@@ -75,7 +52,6 @@ define([
         return $q.all(proms)
         .then((result) => {
           let { rosters, shifts } = result;
-          console.log('rosters', rosters);
           rosters = _.map(rosters, roster => ({
             date: roster.date,
             rosteredStart: roster.start,
@@ -97,7 +73,7 @@ define([
       };
     };
 
-    $scope.testCols = [{
+    $scope.cols = [{
       data: {
         _: 'date',
         display(row) {
@@ -115,7 +91,6 @@ define([
         _: 'rosteredStart',
         display(row) {
           return moment(row.rosteredStart).format('hh:mm a');
-          // this needs to be the rosters time, not shifts
         }
       },
       name: 'Rostered Start',
@@ -128,54 +103,46 @@ define([
           const rosteredStart = moment(row.rosteredStart);
 
           if (actualStart.isSameOrBefore(rosteredStart)) {
-            // return 'on time';
             return actualStart.format('hh:mm a');
           }
-          return 'late';
+          return 'started late';
         }
       },
       name: 'Actual Start',
-      className: 'dt-body-left',
-      defaultContent: 'on time'
+      className: 'dt-body-left'
     }, {
       data: {
         _: 'rosteredFinish',
         display(row) {
-          const actualFinish = moment(row.actualFinish);
-          const rosteredFinish = moment(row.rosteredFinish);
           if (row.rosteredFinish === null) {
             return 'no finish time clocked';
           }
-
-
           return moment(row.rosteredFinish).format('hh:mm a');
         }
       },
       name: 'Rostered Finish',
       className: 'dt-body-left',
-      defaultContent: '-'
+      defaultContent: 'no finish time clocked'
     }, {
       data: {
-        _: 'actualFinish',
-        display(row) {
-          const actualFinish = moment(row.actualFinish);
-          const rosteredFinish = moment(row.rosteredFinish);
-          if (row.actualFinish === null) {
-            return 'no finish time clocked';
-          }
-          // if (actualFinish.isAfter(rosteredFinish)) {
-          //   return 'on time';
-          // }
-          const diff = actualFinish.diff(rosteredFinish, 'minutes');
-          return diff;
-          // return 'left early';
-
-          // return moment(row.actualFinish).format('hh:mm a');
+        _: 'actualFinish'
+      },
+      render(data, type, row) {
+        const actualFinish = moment(row.actualFinish);
+        const rosteredFinish = moment(row.rosteredFinish);
+        // if (row.actualFinish === null) {
+        //   return 'no finish time clocked';
+        // }
+        if (actualFinish.isAfter(rosteredFinish)) {
+          const timeDiff = `${actualFinish.diff(rosteredFinish, 'minutes')} minutes`;
+          const html = `left early <span id="status" class="badge badge-pill badge-danger">${timeDiff}</span>`;
+          return html;
         }
+        return 'on time';
       },
       name: 'Actual Finish',
       className: 'dt-body-left',
-      defaultContent: 'time diff msg'
+      defaultContent: 'no finish time clocked'
     }];
 
     // $scope.dateSelected = (date) => {
@@ -206,65 +173,6 @@ define([
     //     console.log('shift', shiftData);
     //   });
     // };
-
-    $scope.cols = [{
-      data: {
-        _: 'date',
-        display(row) {
-          const day = new moment(row.date);
-          if (day.isValid()) {
-            return day.format('MMMM Do YYYY');
-          }
-          return day;
-        }
-      },
-      name: 'Day',
-      className: 'dt-body-left'
-    }, {
-      data: {
-        _: 'start',
-        display(row) {
-          const start = moment(row.start).format('hh:mm a');
-          return start;
-          // this needs to be the rosters time, not shifts
-        }
-      },
-      name: 'Rostered Start',
-      className: 'dt-body-left'
-    }, {
-      data: {
-        _: ''
-      },
-      name: 'Actual Start',
-      className: 'dt-body-left',
-      defaultContent: 'on time'
-    }, {
-      data: {
-        _: 'finish',
-        display(row) {
-          if (row.finish === null) {
-            return 'no finish time clocked';
-          }
-          const finish = moment(row.finish).format('hh:mm a');
-          return finish;
-        }
-      },
-      name: 'Rostered Finish',
-      className: 'dt-body-left',
-      defaultContent: '-'
-    }, {
-      data: '',
-      name: 'Actual Finish',
-      className: 'dt-body-left',
-      defaultContent: 'time diff msg'
-    }];
-
-    $scope.tableOptions = {
-      pageLength: 25,
-      order: [[0, 'desc']],
-      searching: false,
-      pagingType: 'simple'
-    };
 
     // $scope.getTableData = (data, settings, cb) => Employees.getAllShifts({
     //   from: new moment('2013-09-15'),

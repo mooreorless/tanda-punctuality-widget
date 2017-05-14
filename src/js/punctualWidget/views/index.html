@@ -17,7 +17,7 @@
 
           <button ng-click="dateSelected('2013-09-15', '2013-09-20')">Get data!</button>
 
-          <table id="employeeShiftsTable" tanda-table-directive data-src="getTableData(data, settings, cb)" data-cols="testCols" data-options="tableOptions"
+          <table id="employeeShiftsTable" tanda-table-directive data-src="getTableData(data, settings, cb)" data-cols="cols" data-options="tableOptions"
             data-table="shiftsTable">
           </table>
         </div>
@@ -27,7 +27,7 @@
       </div>
       <div class="row">
         <div class="col-md-6">
-          Rosters:
+          Rosters: {{timeDiff}}
           <!--<pre>{{rosters|json}}</pre>-->
         </div>
         <div class="col-md-6">
