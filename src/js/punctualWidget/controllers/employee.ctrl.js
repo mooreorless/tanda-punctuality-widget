@@ -19,8 +19,8 @@ define([
     $scope.rosters = [];
     $scope.shifts = [];
     $scope.today = new moment().format('MMM Do YYYY hh:mm:ss a');
-    $scope.dateSelected = new moment().format('yyyy-MM-dd');
-    $scope.notFound = null;
+    $scope.notFound = false;
+    $scope.searching = false;
 
     $scope.punctualStats = {
       late: 0,
@@ -35,32 +35,25 @@ define([
       locale: {
         format: 'YYYY-MM-DD'
       },
+      startDate: '2013-09-15',
+      endDate: '2014-06-07',
       showDropdowns: true
     }, (start, end) => {
       $scope.search(start, end);
     });
 
-    // $scope.search = (from, to) => {
-    //   console.log('date selected', from);
-    //   console.log('date to', to);
-    //   return Employees.getRoster({ date }).$promise
-    //   .then((roster) => {
-    //     if (!roster.length) {
-    //       $scope.notFound = 'No rosters found';
-    //     }
-    //     delete $scope.notFound;
-    //   })
-    //   .catch(err => console.log(err));
-    // };
-
     $scope.getTableData = (data, settings, cb) => {
       $scope.search = (from, to) => {
+        delete $scope.notFound;
         const proms = {
           rosters: Employees.getAllRosters({ from, to }).$promise,
           shifts: Employees.getAllShifts({ from, to }).$promise
         };
         return $q.all(proms)
         .then((result) => {
+          if (!result.rosters.length) {
+            $scope.notFound = true;
+          }
           let { rosters, shifts } = result;
           rosters = _.map(rosters, roster => ({
             rosterDate: roster.date,
@@ -75,18 +68,9 @@ define([
           }));
 
           let shiftData = _.merge(rosters, shifts);
-          // console.log(shiftData);
           shiftData = _.map(shiftData, (item) => {
             const rosterDate = moment(item.rosterDate);
             const shiftDate = moment(item.shiftDate);
-
-            // const rosterTime = moment(item.rosteredStart).format('hh:mm a');
-            // const shiftTime = moment(item.actualStart).format('hh:mm a');
-            // console.log('Roster Date: ', rosterDate);
-            // console.log('Shift date: ', shiftDate);
-            // console.log('Rsoter time: ', rosterTime);
-            // console.log('Shift time: ', shiftTime);
-
 
             if (!rosterDate.isSame(shiftDate)) {
               return {
@@ -102,7 +86,6 @@ define([
             item.date = item.rosterDate;
             delete item.shiftDate;
             delete item.rosterDate;
-
             return {
               date: item.date,
               rosterDate: item.rosterDate,
@@ -123,8 +106,6 @@ define([
       data(row) {
         if (row.date || row.rosterDate) {
           const day = moment(row.date);
-          console.log(day);
-
           if (day.isValid()) {
             return `${day.format('MMMM Do YYYY')} (was moved from ${moment(row.rosterDate).format('MMMM Do')})`;
           }
@@ -184,7 +165,7 @@ define([
 
           if (actualFinish.isBefore(rosteredFinish)) {
             const timeDiff = `${actualFinish.diff(rosteredFinish, 'minutes')} minutes`;
-            html = `left early <a data-toggle="tooltip" title="${time}"><span id="status" class="badge badge-pill badge-danger">${timeDiff}</span></a>`;
+            html = `left early <a data-toggle="tooltip" class="text-bold" title="${time}"><span id="status" class="badge badge-pill badge-danger">${timeDiff}</span></a>`;
 
             $scope.punctualStats.leftEarly++;
             return html;

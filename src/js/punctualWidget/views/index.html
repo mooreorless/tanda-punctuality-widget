@@ -10,16 +10,14 @@
             <p class="input-group">
               <input type="text" name="daterange" class="form-control" placeholder="Select dates" />
               <span class="input-group-btn">
-          <button type="button" class="btn btn-default" ng-click="datePickerOpen = !datePickerOpen"><i class="fa fa-calendar"></i></button>
+          <button type="button" name="daterange" class="btn btn-default"><i class="fa fa-calendar"></i></button>
         </span>
             </p>
           </div>
         </div>
         <div class="card-block text-center">
           <h4 class="card-title">Graph goes here</h4>
-
           <p class="card-text">Punctuality message</p>
-
           <div class="stats-block">
             <div class="stat-card">
               <div class="stat-msg">arrived late</div>
@@ -34,11 +32,9 @@
               <div class="stat-value">{{punctualStats.leftEarly}}</div>
             </div>
           </div>
-          <pre>{{roster|json}}</pre>
-          <button ng-click="loadDates('2013-09-15', '2014-06-07')">Get data!</button>
-
+          <br>
           <div ng-show="notFound" class="alert alert-danger" role="alert">
-            <strong>Oh snap!</strong> {{notFound}}
+            <strong>Oh snap!</strong> No rosters found. Select another date and try again.
           </div>
 
           <table id="employeeShiftsTable" tanda-table-directive data-src="getTableData(data, settings, cb)" data-cols="cols" data-options="tableOptions"
