@@ -16,6 +16,7 @@ define([
     $scope.employee = thisEmployee;
     $scope.rosters = [];
     $scope.shifts = [];
+    $scope.today = new moment().format('MMM Do YYYY hh:mm:ss a');
     /**
      * create hashmap with actual times, and rostered times!! use that for the cols;
      * then create a difference between times for the actual vs rostered columns.

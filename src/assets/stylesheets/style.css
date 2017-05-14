@@ -24,3 +24,33 @@ tr >
 .time-comment {
   cursor: pointer;
 }
+
+.stats-block {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-content: center;
+  margin: 0 auto;
+  max-width: 630px;
+}
+
+.stat-card {
+  padding: .8em;
+  border-radius: 2px;
+  border: lightgray 2px solid;
+  width: 200px;
+  color: darkgray;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.stat-msg {
+  float: left;
+  text-transform: uppercase;
+}
+
+.stat-value {
+  color: black;
+  float: right;
+}

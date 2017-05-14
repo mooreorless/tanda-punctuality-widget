@@ -15,24 +15,29 @@
 
           <p class="card-text">Punctuality message</p>
 
+          <div class="stats-block">
+            <div class="stat-card">
+              <div class="stat-msg">arrived late</div>
+              <div class="stat-value">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-msg">punctual</div>
+              <div class="stat-value">8</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-msg">left early</div>
+              <div class="stat-value">2</div>
+            </div>
+          </div>
+
           <button ng-click="dateSelected('2013-09-15', '2013-09-20')">Get data!</button>
 
           <table id="employeeShiftsTable" tanda-table-directive data-src="getTableData(data, settings, cb)" data-cols="cols" data-options="tableOptions"
             data-table="shiftsTable">
           </table>
         </div>
-        <div class="card-footer text-muted text-center">
-          ...
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-          Rosters:
-          <!--<pre>{{rosters|json}}</pre>-->
-        </div>
-        <div class="col-md-6">
-          Shifts:
-          <!--<pre>{{shifts|json}}</pre>-->
+        <div class="card-footer text-muted text-center small">
+          Last Updated {{today}}
         </div>
       </div>
     </div>
