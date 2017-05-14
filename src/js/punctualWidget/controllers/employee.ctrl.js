@@ -16,8 +16,6 @@ define([
     Employees
   ) => {
     $scope.employee = thisEmployee;
-    $scope.rosters = [];
-    $scope.shifts = [];
     $scope.today = new moment().format('MMM Do YYYY hh:mm:ss a');
     $scope.notFound = false;
     $scope.searching = false;
@@ -35,8 +33,6 @@ define([
       locale: {
         format: 'YYYY-MM-DD'
       },
-      startDate: '2013-09-15',
-      endDate: '2014-06-07',
       showDropdowns: true
     }, (start, end) => {
       $scope.search(start, end);
@@ -139,7 +135,6 @@ define([
             $scope.punctualStats.late++;
             return 'started late';
           }
-          // return 'started late';
         }
       },
       name: 'Actual Start',

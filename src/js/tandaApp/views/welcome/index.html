@@ -1,15 +1,18 @@
 <div class="container" ng-controller="MainCtrl">
   <div class="col-md-12">
     <div class="row">
-      <h3>Your Employees</h3>
-    </div>
-    <div class="row">
+      <div class="jumbotron">
+        <h1 class="display-4">Welcome!</h1>
+        <p class="lead">This a employee punctuality widget. Please select one of your employees from below.
+        </p>
+        <hr class="my-4">
+      </div>
       <div class="card-deck">
         <div class="card employee-card">
           <img class="card-img-top employee-card-profile" src="assets/mike.jpg" alt="Mike">
           <div class="card-block">
             <h4 class="card-title">Mike</h4>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <p class="card-text">DevOps Engineer | Wine connoisseur</p>
             <a ui-sref="app.main.employee({ id: 1 })" class="btn btn-primary">Check Mike's punctuality</a>
           </div>
         </div>
@@ -17,15 +20,11 @@
           <img class="card-img-top employee-card-profile" src="assets/sarah.jpg" alt="Sarah">
           <div class="card-block">
             <h4 class="card-title">Sarah</h4>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <p class="card-text">HR Manager | Mild gambling addiction | Soon to be unemployed</p>
             <a ui-sref="app.main.employee" class="btn btn-primary disabled">Check Sarah's punctuality</a>
           </div>
         </div>
       </div>
-    </div>
-    <div class="row">
-      <p>{{welcome}}</p>
-      <div>Add description of challenge, any assumptions, extra features etc</div>
     </div>
   </div>
 </div>

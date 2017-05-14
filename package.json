@@ -1,7 +1,7 @@
 {
-  "name": "punctionality-widget",
+  "name": "punctuality-widget",
   "version": "1.0.0",
-  "description": "punctionality widget tanda challenge",
+  "description": "punctuality widget tanda challenge",
   "main": "index.js",
   "scripts": {
     "start": "gulp && http-server",
