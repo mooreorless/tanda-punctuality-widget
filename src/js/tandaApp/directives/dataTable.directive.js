@@ -2,8 +2,9 @@ define([
   'angular',
   'jquery',
   'lodash',
+  'moment',
   'datatables.net'
-], (angular, $, _) => {
+], (angular, $, _, moment) => {
   angular
   .module('tandaApp')
   .directive('tandaTableDirective', $rootScope => ({
@@ -38,10 +39,16 @@ define([
       scope.options = scope.options || {};
       options = _.defaults(options, scope.options);
       scope.table = $(elem).DataTable(options);
-      // add hover function
 
       $rootScope.$on('UPDATE_TABLE', () => {
         scope.table.ajax.reload();
+      });
+
+      $('#employeeShiftsTable tbody').on('mouseover', 'tr > .time-comment', () => {
+        const data = scope.table.row(this).data();
+        if (data.actualFinish !== null) {
+          $('[data-toggle="tooltip"]').tooltip();
+        }
       });
     }
   }));

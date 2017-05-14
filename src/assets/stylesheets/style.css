@@ -19,3 +19,8 @@
 #employeeShiftsTable {
   width: 100%;
 }
+
+tr >
+.time-comment {
+  cursor: pointer;
+}

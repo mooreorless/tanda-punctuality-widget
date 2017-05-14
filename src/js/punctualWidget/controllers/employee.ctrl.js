@@ -63,8 +63,6 @@ define([
             actualStart: shift.start,
             actualFinish: shift.finish
           }));
-          console.log('rs', rosters);
-          console.log('sh', shifts);
 
           const shiftData = _.merge(rosters, shifts);
           console.log(shiftData);
@@ -134,57 +132,16 @@ define([
         //   return 'no finish time clocked';
         // }
         if (actualFinish.isAfter(rosteredFinish)) {
+          const time = actualFinish.format('hh:mm a');
           const timeDiff = `${actualFinish.diff(rosteredFinish, 'minutes')} minutes`;
-          const html = `left early <span id="status" class="badge badge-pill badge-danger">${timeDiff}</span>`;
+          const html = `left early <a data-toggle="tooltip" title="${time}"><span id="status" class="badge badge-pill badge-danger">${timeDiff}</span></a>`;
           return html;
         }
         return 'on time';
       },
       name: 'Actual Finish',
-      className: 'dt-body-left',
+      className: 'dt-body-left time-comment',
       defaultContent: 'no finish time clocked'
     }];
-
-    // $scope.dateSelected = (date) => {
-    //   const proms = {
-    //         roster: Employees.getRoster({ date: new moment(date) }).$promise,
-    //         shift: Employees.getShift({ date: new moment(date) }).$promise
-    //       };
-    //   $q.all(proms)
-    //   .then((data) => {
-    //     const roster = data.roster[0];
-    //     const shift = data.shift[0];
-
-    //     const shiftData = {
-    //       date: roster.date,
-    //       rosteredStart: roster.start,
-    //       rosteredFinish: roster.finish,
-    //       actualStart: shift.start,
-    //       actualFinish: shift.finish
-    //     };
-    //     // const shift = _.map(shiftData, item => console.log('item', item));
-    //     // const shift = _.map(shiftData, item => ({
-    //     //   date: item.date,
-    //     //   rosteredStart: item.roster.start,
-    //     //   rosteredFinish: item.roster.finish,
-    //     //   actualStart: item.shift.start,
-    //     //   actualFinish: item.shift.finish
-    //     // }));
-    //     console.log('shift', shiftData);
-    //   });
-    // };
-
-    // $scope.getTableData = (data, settings, cb) => Employees.getAllShifts({
-    //   from: new moment('2013-09-15'),
-    //   to: new moment()
-    // }).$promise
-    //   .then((shifts) => {
-    //     const arr = [];
-    //     for (let i = 0; i < 5; ++i) {
-    //       arr.push(shifts[i]);
-    //     }
-    //     // console.log('shifts', shifts);
-    //     cb({ data: arr });
-    //   });
   });
 });
