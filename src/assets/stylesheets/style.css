@@ -54,6 +54,11 @@ tr >
   color: black;
   float: right;
 }
+
+#stats-graph {
+  max-width: 195px;
+}
+
 .punctual-msg {
   max-width: 400px;
   margin: 0 auto;
