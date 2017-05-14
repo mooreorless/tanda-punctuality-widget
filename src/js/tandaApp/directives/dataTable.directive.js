@@ -44,15 +44,12 @@ define([
         scope.table.ajax.reload();
       });
 
-      $(document).ready(() => {
-        $('#employeeShiftsTable tbody').on('mouseover', 'tr > .time-comment', (e) => {
-          e.stopPropagation();
-          const data = scope.table.row(this).data();
-          if (data.actualFinish !== null) {
-          // $('[data-toggle="tooltip"]').tooltip();
+      $('#employeeShiftsTable tbody').on('mouseover', 'tr > .time-comment', (e) => {
+        e.stopPropagation();
+        const data = scope.table.row(this).data();
+        if (data.actualFinish !== null) {
           $('.dt-body-left .time-comment > a').tooltip();
         }
-        });
       });
     }
   }));

@@ -3,7 +3,7 @@ define([
   'angular-ui-router',
   'angular-resource',
   'oclazyload',
-  'angular-ui-bootstrap',
+  'angular-bootstrap',
   'punctualWidget',
   'tandaSDK'
 ], (angular) => {

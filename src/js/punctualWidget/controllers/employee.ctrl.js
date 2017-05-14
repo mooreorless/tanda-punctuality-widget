@@ -2,7 +2,9 @@ define([
   'angular',
   'lodash',
   'jquery',
-  'moment'
+  'moment',
+  'angular-bootstrap',
+  'bootstrap-daterangepicker'
 ], (angular, _, $, moment) => {
   angular
   .module('punctualWidget')
@@ -17,96 +19,134 @@ define([
     $scope.rosters = [];
     $scope.shifts = [];
     $scope.today = new moment().format('MMM Do YYYY hh:mm:ss a');
+    $scope.dateSelected = new moment().format('yyyy-MM-dd');
+    $scope.notFound = null;
 
     $scope.punctualStats = {
       late: 0,
       onTime: 0,
       leftEarly: 0
     };
-    /**
-     * create hashmap with actual times, and rostered times!! use that for the cols;
-     * then create a difference between times for the actual vs rostered columns.
-     * Then use time difference for the extra display for actual finish
-     *
-     * Then count how many times they were late, ontime, and when they left early
-     *
-     *
-     * when selecting times from datePicker, if no to date selected use + 7 days or to 'today'
-     */
 
-    Employees.getAllRosters({
-      from: new moment('2013-09-15'),
-      to: new moment('2013-09-20')
-    }).$promise
-    .then((rosters) => {
-      $scope.rosters = rosters;
+    $scope.dateOptions = {
+      showWeeks: false
+    };
+    $('input[name="daterange"]').daterangepicker({
+      locale: {
+        format: 'YYYY-MM-DD'
+      },
+      showDropdowns: true
+    }, (start, end) => {
+      $scope.search(start, end);
     });
 
-    Employees.getAllShifts({
-      from: new moment('2013-09-15'),
-      to: new moment('2013-09-20')
-    }).$promise
-    .then((shifts) => {
-      $scope.shifts = shifts;
-    });
+    // $scope.search = (from, to) => {
+    //   console.log('date selected', from);
+    //   console.log('date to', to);
+    //   return Employees.getRoster({ date }).$promise
+    //   .then((roster) => {
+    //     if (!roster.length) {
+    //       $scope.notFound = 'No rosters found';
+    //     }
+    //     delete $scope.notFound;
+    //   })
+    //   .catch(err => console.log(err));
+    // };
 
     $scope.getTableData = (data, settings, cb) => {
-      $scope.dateSelected = (from, to) => {
+      $scope.search = (from, to) => {
         const proms = {
-          rosters: Employees.getAllRosters({ from: new moment(from), to: new moment(to) }).$promise,
-          shifts: Employees.getAllShifts({ from: new moment(from), to: new moment(to) }).$promise
+          rosters: Employees.getAllRosters({ from, to }).$promise,
+          shifts: Employees.getAllShifts({ from, to }).$promise
         };
         return $q.all(proms)
         .then((result) => {
           let { rosters, shifts } = result;
           rosters = _.map(rosters, roster => ({
-            date: roster.date,
+            rosterDate: roster.date,
             rosteredStart: roster.start,
             rosteredFinish: roster.finish
           }));
 
           shifts = _.map(shifts, shift => ({
-            date: shift.date,
+            shiftDate: shift.date,
             actualStart: shift.start,
             actualFinish: shift.finish
           }));
 
-          const shiftData = _.merge(rosters, shifts);
-          console.log(shiftData);
+          let shiftData = _.merge(rosters, shifts);
+          // console.log(shiftData);
+          shiftData = _.map(shiftData, (item) => {
+            const rosterDate = moment(item.rosterDate);
+            const shiftDate = moment(item.shiftDate);
+
+            // const rosterTime = moment(item.rosteredStart).format('hh:mm a');
+            // const shiftTime = moment(item.actualStart).format('hh:mm a');
+            // console.log('Roster Date: ', rosterDate);
+            // console.log('Shift date: ', shiftDate);
+            // console.log('Rsoter time: ', rosterTime);
+            // console.log('Shift time: ', shiftTime);
+
+
+            if (!rosterDate.isSame(shiftDate)) {
+              return {
+                date: item.shiftDate,
+                rosterDate: item.rosterDate,
+                rosteredStart: item.actualStart,
+                rosteredFinish: item.actualFinish,
+                actualStart: item.actualStart,
+                actualFinish: item.actualFinish,
+                shiftChanged: true
+              };
+            }
+            item.date = item.rosterDate;
+            delete item.shiftDate;
+            delete item.rosterDate;
+
+            return {
+              date: item.date,
+              rosterDate: item.rosterDate,
+              rosteredStart: item.rosteredStart,
+              rosteredFinish: item.rosteredFinish,
+              actualStart: item.actualStart,
+              actualFinish: item.actualFinish
+            };
+          });
           cb({ data: shiftData });
         });
       };
     };
 
+
     $scope.cols = [{
-      data: {
-        _: 'date',
-        display(row) {
-          const day = new moment(row.date);
+      name: 'Day',
+      data(row) {
+        if (row.date || row.rosterDate) {
+          const day = moment(row.date);
+          console.log(day);
+
           if (day.isValid()) {
-            return day.format('MMMM Do YYYY');
+            return `${day.format('MMMM Do YYYY')} (was moved from ${moment(row.rosterDate).format('MMMM Do')})`;
           }
-          return day;
+          return day.format('MMMM Do YYYY');
         }
       },
-      name: 'Day',
-      className: 'dt-body-left'
+      className: 'dt-body-left',
+      defaultContent: '-'
     }, {
-      data: {
-        _: 'rosteredStart',
-        display(row) {
-          return moment(row.rosteredStart).format('hh:mm a');
+      data(row, type) {
+        if (type === 'display') {
+          if (row.rosteredStart) {
+            return moment(row.rosteredStart).format('hh:mm a');
+          }
         }
       },
       name: 'Rostered Start',
-      className: 'dt-body-left'
+      className: 'dt-body-left',
+      defaultContent: '-'
     }, {
-      data: {
-        _: 'actualStart',
-        display(row) {
-          if (!row.actualStart || !row.actualFinish) {
-            return;
-          }
+      data(row) {
+        if (row.actualStart || row.actualFinish) {
           const actualStart = moment(row.actualStart);
           const rosteredStart = moment(row.rosteredStart);
 
@@ -114,20 +154,19 @@ define([
             $scope.punctualStats.onTime++;
             return actualStart.format('hh:mm a');
           }
-          $scope.punctualStats.late++;
-          return 'started late';
+          if (actualStart.isAfter(rosteredStart)) {
+            $scope.punctualStats.late++;
+            return 'started late';
+          }
+          // return 'started late';
         }
       },
       name: 'Actual Start',
       className: 'dt-body-left',
       defaultContent: 'no shift logged'
     }, {
-      data: {
-        _: 'rosteredFinish',
-        display(row) {
-          if (row.rosteredFinish === null) {
-            return 'no finish time clocked';
-          }
+      data(row) {
+        if (row.rosteredFinish !== null) {
           return moment(row.rosteredFinish).format('hh:mm a');
         }
       },
@@ -135,9 +174,7 @@ define([
       className: 'dt-body-left',
       defaultContent: 'no finish time clocked'
     }, {
-      data: {
-        _: 'actualFinish'
-      },
+      data: 'actualFinish',
       render(data, type, row) {
         const actualFinish = moment(row.actualFinish);
         const rosteredFinish = moment(row.rosteredFinish);
@@ -152,7 +189,6 @@ define([
             $scope.punctualStats.leftEarly++;
             return html;
           }
-
           return html;
         }
       },
@@ -162,10 +198,11 @@ define([
     }];
 
     $scope.tableOptions = {
-      pageLength: 25,
+      pageLength: 5,
       pagingType: 'simple',
       searching: false,
-      order: [['0', 'desc']]
+      order: [['0', 'desc']],
+      lengthMenu: [5, 10, 15, 25]
     };
   });
 });

@@ -7,7 +7,12 @@
             <img class="employee-profile-widget" src="assets/mike.jpg" alt="Mike"> {{employee.name}}
           </div>
           <div class="pay-period pull-right">
-            <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> This Pay Period
+            <p class="input-group">
+              <input type="text" name="daterange" class="form-control" placeholder="Select dates" />
+              <span class="input-group-btn">
+          <button type="button" class="btn btn-default" ng-click="datePickerOpen = !datePickerOpen"><i class="fa fa-calendar"></i></button>
+        </span>
+            </p>
           </div>
         </div>
         <div class="card-block text-center">
@@ -29,8 +34,12 @@
               <div class="stat-value">{{punctualStats.leftEarly}}</div>
             </div>
           </div>
+          <pre>{{roster|json}}</pre>
+          <button ng-click="loadDates('2013-09-15', '2014-06-07')">Get data!</button>
 
-          <button ng-click="dateSelected('2013-09-15', '2014-06-07')">Get data!</button>
+          <div ng-show="notFound" class="alert alert-danger" role="alert">
+            <strong>Oh snap!</strong> {{notFound}}
+          </div>
 
           <table id="employeeShiftsTable" tanda-table-directive data-src="getTableData(data, settings, cb)" data-cols="cols" data-options="tableOptions"
             data-table="shiftsTable">
